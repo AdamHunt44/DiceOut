@@ -1,5 +1,6 @@
 package com.example.diceout;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -9,20 +10,29 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
+    // ArrayList and variables to store the values of the dice
     ArrayList<Integer> dice;
-    int score;
     int die1;
     int die2;
     int die3;
+
+    // ArrayList to hold all three dice images
+    ArrayList<ImageView> diceImageViews;
+
+    int score;
     Random rand;
 
+    // UI components
     TextView rollResult;
     Button rollButton;
 
@@ -52,7 +62,16 @@ public class MainActivity extends AppCompatActivity {
         // Create Arraylist container for the dice values
         dice = new ArrayList<Integer>();
 
-        // Create a greeting
+        ImageView die1Image = findViewById(R.id.die1_image);
+        ImageView die2Image = findViewById(R.id.die2_image);
+        ImageView die3Image = findViewById(R.id.die3_image);
+
+        diceImageViews = new ArrayList<ImageView>();
+        diceImageViews.add(die1Image);
+        diceImageViews.add(die2Image);
+        diceImageViews.add(die3Image);
+
+        // Create a greeting that displays when the app is opened
         Toast.makeText(getApplicationContext(), "Welcome to DiceOut", Toast.LENGTH_SHORT).show();
     }
 
@@ -67,6 +86,17 @@ public class MainActivity extends AppCompatActivity {
         dice.add(die1);
         dice.add(die2);
         dice.add(die3);
+
+        for (int dieOfSet = 0; dieOfSet < 3; dieOfSet++) {
+            String imageName = "die_" + dice.get(dieOfSet) + ".png";
+            try {
+                InputStream stream = getAssets().open(imageName);
+                Drawable d = Drawable.createFromStream(stream, null);
+                diceImageViews.get(dieOfSet).setImageDrawable(d);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
         // Build the message
         String message = "You Rolled a " + die1 + ", a " + die2 + " and a " + die3;
