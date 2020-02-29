@@ -103,10 +103,22 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Build the message
-        String message = "You Rolled a " + die1 + ", a " + die2 + " and a " + die3;
+        String message;
 
-        // Update the UI
+        if (die1 == die2 && die1 == die3) {
+            int scoreDelta = die1 * 100;
+            message = "You rolled a triple " + die1 + "! You score " + scoreDelta + " points!";
+            score += scoreDelta;
+        } else if (die1 == die2 || die1 == die3 || die2 == die3) {
+            message = "You rolled doubles for 50 points!";
+            score += 50;
+        } else {
+            message = "You didn't score any points this roll. Try Again!";
+        }
+
+        // Udpdate the UI
         rollResult.setText(message);
+        scoreText.setText("Score: " + score);
     }
 
     @Override
