@@ -36,6 +36,9 @@ public class MainActivity extends AppCompatActivity {
     TextView rollResult;
     Button rollButton;
 
+    // Field to hold the score text
+    TextView scoreText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
         rollResult = findViewById(R.id.rollResult);
         rollButton = findViewById(R.id.rollButton);
+        scoreText = findViewById(R.id.scoreText);
         rand = new Random();
 
         // Create Arraylist container for the dice values
